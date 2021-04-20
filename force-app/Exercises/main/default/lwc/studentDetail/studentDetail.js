@@ -4,16 +4,18 @@ import FIELD_Description from '@salesforce/schema/Contact.Description';
 import FIELD_Email from '@salesforce/schema/Contact.Email';
 import FIELD_Phone from '@salesforce/schema/Contact.Phone';
 import FIELD_Name from '@salesforce/schema/Contact.Name';
-const fields = [FIELD_Name, FIELD_Description, FIELD_Email,FIELD_Phone,'Contact.Imaginary__c'];
+import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
+import SELECTED_STUDENT_CHANNEL from '@salesforce/messageChannel/SelectedStudentChannel__c';
+const fields = [FIELD_Name, FIELD_Description, FIELD_Email,FIELD_Phone];
 
 export default class StudentDetail extends LightningElement {
-	studentId = '0036300000mmddZAAQ';
+	studentId ;
+	subscription;
 
-	//TODO #4: use wire service to call getRecord, passing in our studentId and array of fields.
-	//		   Store the result in a property named wiredStudent.
 	@wire(getRecord, {recordId:'$studentId',fields:fields })
 	wiredStudent;
-		
+	@wire(MessageContext) messageContext;	
+
 	get name() {
 		return this._getDisplayValue(this.wiredStudent.data, FIELD_Name);
 	}
@@ -43,5 +45,24 @@ export default class StudentDetail extends LightningElement {
 	_getDisplayValue(data, field) {
 		return getFieldDisplayValue(data, field) ? getFieldDisplayValue(data, field) : getFieldValue(data, field);
 	}
+	connectedCallback() {
+		if(this.subscription){
+		return;
+		}
+		this.subscription = subscribe(
+		this.messageContext,
+		SELECTED_STUDENT_CHANNEL,
+		(message) => {
+		this.handleStudentChange(message)
+		}
+		);
+		}
+	handleStudentChange(message) {
+			this.studentId = message.studentId;
+			}
+	disconnectedCallback() {
+		unsubscribe(this.subscription);
+		this.subscription = null;
+		}
 	
 }

@@ -69,6 +69,8 @@ export default class StudentBrowserForm extends NavigationMixin(LightningElement
 		onAddNewDelivery() {
 			// Opens the new Course Delivery record modal dialog
 		// with the selected InstructorId prepopulated
+		let fieldValues = encodeDefaultFieldValues({Instructor__c: this.selectedInstructorId});
+		console.log(` ${fieldValues}`);
 		let pageInfo = {
 			type: "standard__objectPage",
 			attributes: {
@@ -76,9 +78,7 @@ export default class StudentBrowserForm extends NavigationMixin(LightningElement
 			actionName: "new"
 			},
 			state: {
-			defaultFieldValues: encodeDefaultFieldValues({
-			Instructor__c: this.selectedInstructorId
-			})
+			defaultFieldValues: fieldValues
 			}
 			};
 			this[NavigationMixin.Navigate](pageInfo);
