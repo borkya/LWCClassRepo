@@ -4,7 +4,7 @@ import FIELD_Description from '@salesforce/schema/Contact.Description';
 import FIELD_Email from '@salesforce/schema/Contact.Email';
 import FIELD_Phone from '@salesforce/schema/Contact.Phone';
 import FIELD_Name from '@salesforce/schema/Contact.Name';
-const fields = [FIELD_Name, FIELD_Description, FIELD_Email,FIELD_Phone];
+const fields = [FIELD_Name, FIELD_Description, FIELD_Email,FIELD_Phone,'Contact.Imaginary__c'];
 
 export default class StudentDetail extends LightningElement {
 	studentId = '0036300000mmddZAAQ';
@@ -32,7 +32,7 @@ export default class StudentDetail extends LightningElement {
 	//TODO #6: Review the cardTitle getter and the _getDisplayValue function below.
 	get cardTitle() {
 		let title = "Please select a student";
-		if (this.wiredStudent.data) {
+      	if (this.wiredStudent.data) {
 			title = this.name;
 		} else if (this.wiredStudent.error) {
 			title = "Something went wrong..."
