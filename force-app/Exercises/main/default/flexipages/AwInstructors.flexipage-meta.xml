@@ -12,6 +12,11 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>studentDetail</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>context</name>
                     <value>BOOKMARKS</value>
