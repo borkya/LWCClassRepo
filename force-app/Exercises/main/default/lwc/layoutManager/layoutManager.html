@@ -22,9 +22,12 @@
 		</template>
 
 		<template if:true={certifiedStudentsView}>
-			<lightning-layout-item  padding="around-small" size="10">
-				<lightning-card title="Certified Students will go here"></lightning-card>
-			</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="10" >
+                <c-certified-student-list
+                certification-name={certificationName}
+                certification-id={certificationId} >
+                </c-certified-student-list>
+                </lightning-layout-item>
 		</template>
 
 		<template if:true={certPopularityView}>
