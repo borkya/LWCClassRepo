@@ -7,6 +7,7 @@ export default class CertifiedStudentList extends LightningElement {
     @api certificationName;
     certifiedStudents;
     error;
+    btnGroupDisabled = true;
     columnConfig = [
         {
         label: 'Name',
@@ -46,4 +47,8 @@ export default class CertifiedStudentList extends LightningElement {
             this.error = result.error;
         }
     }
+    onRowSelection(event) {
+        let numSelected = event.detail.selectedRows.length;
+        this.btnGroupDisabled = (numSelected === 0);
+        }
 }
