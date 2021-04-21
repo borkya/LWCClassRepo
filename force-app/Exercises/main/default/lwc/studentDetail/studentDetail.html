@@ -1,20 +1,34 @@
 <template>
 		
     <!-- TODO #7: use the cardTitle getter to display a dynamic title for the lightning-card -->
+    <template if:true={wiredStudent.data}>
     <lightning-card title={cardTitle}>
-            
-        <template if:true={wiredStudent.error}>
+       <lightning-button variant="brand" label="Go To Record" slot="actions" onclick={handleOnClick}></lightning-button>   
+         <template if:true={wiredStudent.error}>
             <div class="slds-var-p-horizontal_medium">
                 <c-error-panel type="inlineMessage" errors={wiredStudent.error}></c-error-panel>
             </div>
         </template>
-
         <template if:true={wiredStudent.data}>
             <div class="slds-var-p-horizontal_medium">
                 <!-- this will be filled out during the lab -->
-            </div>
+            <lightning-card variant="narrow">
+                <lightning-formatted-email value={email}>
+                </lightning-formatted-email>
+                <p>
+                <lightning-formatted-phone
+                    value={phone}>
+                </lightning-formatted-phone>
+                </p>  
+                <lightning-formatted-text
+                value={description}
+                linkify>
+                </lightning-formatted-text>
+          
+            </lightning-card>        
+    </div>
         </template>
         
     </lightning-card>
-
+  </template>   
 </template>

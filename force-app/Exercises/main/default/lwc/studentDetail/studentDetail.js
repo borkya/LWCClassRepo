@@ -6,9 +6,11 @@ import FIELD_Phone from '@salesforce/schema/Contact.Phone';
 import FIELD_Name from '@salesforce/schema/Contact.Name';
 import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
 import SELECTED_STUDENT_CHANNEL from '@salesforce/messageChannel/SelectedStudentChannel__c';
+import { NavigationMixin } from 'lightning/navigation';
+import { encodeDefaultFieldValues } from 'lightning/pageReferenceUtils';
 const fields = [FIELD_Name, FIELD_Description, FIELD_Email,FIELD_Phone];
 
-export default class StudentDetail extends LightningElement {
+export default class StudentDetail extends NavigationMixin(LightningElement) {
 	studentId ;
 	subscription;
 
@@ -54,8 +56,7 @@ export default class StudentDetail extends LightningElement {
 		SELECTED_STUDENT_CHANNEL,
 		(message) => {
 		this.handleStudentChange(message)
-		}
-		);
+			});
 		}
 	handleStudentChange(message) {
 			this.studentId = message.studentId;
@@ -64,5 +65,15 @@ export default class StudentDetail extends LightningElement {
 		unsubscribe(this.subscription);
 		this.subscription = null;
 		}
-	
+
+	handleOnClick(){
+		this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: this.studentId,
+                objectApiName: 'Contact', // objectApiName is optional
+                actionName: 'view'
+            }
+        });
+	}
 }

@@ -1,0 +1,20 @@
+<template>
+    
+       
+        <lightning-card  variant="narrow" title="Recent Worldwide Deliveries" icon-name="utility:world">
+            <template for:each={deliveries.data} for:item="delivery">
+                <ul key={delivery.Id} class="slds-var-m-horizontal_medium" > 
+                <strong><lightning-formatted-text value={delivery.Course__r.Name} key={delivery.Id}>
+                    </lightning-formatted-text> </strong>
+                    <br>
+                    {delivery.Location__c} on  {delivery.Start_Date__c}
+                </ul>  
+           
+            </template>
+
+       
+
+        </lightning-card>
+
+    
+</template>
