@@ -11,4 +11,8 @@ public with sharing class CertifiedStudentList {
                 ORDER BY Certified_Professional__r.Name
                 ];
     }
+    @AuraEnabled
+    public static void deleteStudentCertification(List < String > certificationIds) {
+        delete[SELECT id FROM Certification_Held__c WHERE Id IN:certificationIds];
+}
 }
