@@ -45,7 +45,7 @@ export default class StudentBrowser extends NavigationMixin(LightningElement) {
         let grid = this.template.querySelector('c-responsive-datatable');
         let gallery = this.template.querySelector('c-student-tiles');
         if (grid) {
-        grid.setSelectedRecord(studentId);
+            grid.setSelectedRecord(studentId);
             }
         if (gallery) {
             gallery.setSelectedStudent(studentId);
