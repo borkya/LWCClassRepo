@@ -9,7 +9,7 @@
 		</thead>
 		<tbody if:true={rows}>
 			<template for:each={rows} for:item="row" for:index="idx">
-				<tr class="slds-hint-parent" data-pk={row.pk} key={row.pk} onclick={onRowclick} ondblclick={onRowDblClick} >
+				<tr class="slds-hint-parent" data-pk={row.pk} key={row.pk} onclick={onRowClick} ondblclick={onRowDblClick} >
 					<template for:each={row.data} for:item="colData">
 						<td class={colData.class} data-label={colData.label} key={colData.columnId}>
 							<span class="slds-truncate">

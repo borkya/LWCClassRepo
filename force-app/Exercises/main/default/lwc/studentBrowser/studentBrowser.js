@@ -54,7 +54,11 @@ export default class StudentBrowser extends NavigationMixin(LightningElement) {
                 recordId: studentId,
                 objectApiName: 'Contact',
                 actionName: 'edit'
-                }
-                });
-            }
+               }
+            });
+        }
+    handleRowClick(event) {
+        let studentId = event.detail.pk;
+        this.updateSelectedStudent(studentId);
+        }    
 }
