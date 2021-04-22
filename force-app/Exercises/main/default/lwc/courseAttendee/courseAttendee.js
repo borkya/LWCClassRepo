@@ -1,11 +1,13 @@
 import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiRecordApi';
+//import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
 import FIELD_CourseName from '@salesforce/schema/Course_Attendee__c.Course_Delivery__r.Course__r.Name';
 import FIELD_StartDate from '@salesforce/schema/Course_Attendee__c.Course_Delivery__r.Start_Date__c';
 import FIELD_StudentId from '@salesforce/schema/Course_Attendee__c.Student__c';
 import FIELD_StudentName from '@salesforce/schema/Course_Attendee__c.Student__r.Name';
 import FIELD_StudentPict from '@salesforce/schema/Course_Attendee__c.Student__r.PhotoUrl';
+import Utils from 'c/utils';
 const fields = [FIELD_CourseName, FIELD_StartDate, FIELD_StudentId, FIELD_StudentName, FIELD_StudentPict];
 
 export default class CourseAttendee extends NavigationMixin(LightningElement) {
@@ -16,14 +18,14 @@ export default class CourseAttendee extends NavigationMixin(LightningElement) {
 	@wire(getRecord, { recordId: '$recordId', fields })
 	wiredMap({ error, data }) {
 		if (data) {
-			const courseName = this._getDisplayValue(data, FIELD_CourseName);
-			const startDate = this._getDisplayValue(data, FIELD_StartDate);
+			const courseName = Utils.getDisplayValue(data, FIELD_CourseName);
+			const startDate = Utils.getDisplayValue(data, FIELD_StartDate);
 			this.attendee = {
 				cardTitle: `${courseName} on ${startDate}`,
-				studentId: this._getDisplayValue(data, FIELD_StudentId),
+				studentId: Utils.getDisplayValue(data, FIELD_StudentId),
 				studentTile: {
-					Name: this._getDisplayValue(data, FIELD_StudentName),
-					PhotoUrl: this._getDisplayValue(data, FIELD_StudentPict),
+					Name: Utils.getDisplayValue(data, FIELD_StudentName),
+					PhotoUrl: Utils.getDisplayValue(data, FIELD_StudentPict),
 				}
 			};
 			this.error = undefined;
@@ -44,7 +46,8 @@ export default class CourseAttendee extends NavigationMixin(LightningElement) {
 		});
 	}
 
-	_getDisplayValue(data, field) {
+/*	_getDisplayValue(data, field) {
 		return getFieldDisplayValue(data, field) ? getFieldDisplayValue(data, field) : getFieldValue(data, field);
 	}
+*/
 }

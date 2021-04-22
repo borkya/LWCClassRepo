@@ -1,5 +1,6 @@
 import { LightningElement, wire } from 'lwc';
-import { getRecord, getFieldValue,getFieldDisplayValue } from 'lightning/uiRecordApi';
+// import { getRecord, getFieldValue,getFieldDisplayValue } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
 import FIELD_Description from '@salesforce/schema/Contact.Description';
 import FIELD_Email from '@salesforce/schema/Contact.Email';
 import FIELD_Phone from '@salesforce/schema/Contact.Phone';
@@ -8,6 +9,7 @@ import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService
 import SELECTED_STUDENT_CHANNEL from '@salesforce/messageChannel/SelectedStudentChannel__c';
 import { NavigationMixin } from 'lightning/navigation';
 import { encodeDefaultFieldValues } from 'lightning/pageReferenceUtils';
+import Utils from 'c/utils';
 const fields = [FIELD_Name, FIELD_Description, FIELD_Email,FIELD_Phone];
 
 export default class StudentDetail extends NavigationMixin(LightningElement) {
@@ -19,18 +21,18 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
 	@wire(MessageContext) messageContext;	
 
 	get name() {
-		return this._getDisplayValue(this.wiredStudent.data, FIELD_Name);
+		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Name);
 	}
 
 	get description() {
-		return this._getDisplayValue(this.wiredStudent.data, FIELD_Description);
+		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Description);
 	}
 
     get phone() {
-		return this._getDisplayValue(this.wiredStudent.data, FIELD_Phone);
+		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Phone);
 	}
     get email() {
-		return this._getDisplayValue(this.wiredStudent.data, FIELD_Email);
+		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Email);
 	}
 
 	//TODO #6: Review the cardTitle getter and the _getDisplayValue function below.
@@ -44,9 +46,11 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
 		return title;
 	}
 	
-	_getDisplayValue(data, field) {
+/*	_getDisplayValue(data, field) {
 		return getFieldDisplayValue(data, field) ? getFieldDisplayValue(data, field) : getFieldValue(data, field);
 	}
+*/
+
 	connectedCallback() {
 		if(this.subscription){
 		return;
