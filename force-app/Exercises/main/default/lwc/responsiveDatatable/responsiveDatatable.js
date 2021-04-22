@@ -71,4 +71,12 @@ export default class ResponsiveDatatable extends LightningElement {
 			this.rows = this.reformatRows(value);
 		}
 	}
+	@api 
+	setSelectedRecord(recordId) {
+		let mySelector = `tr[data-pk='${recordId}']`;
+		let selectedRow = this.template.querySelector(mySelector);
+		if (selectedRow) {
+			this.highlightSelectedRow(selectedRow);
+			}
+		}
 }
