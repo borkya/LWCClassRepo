@@ -2,6 +2,7 @@ import { LightningElement,api,wire } from 'lwc';
 import getCertifiedStudents from '@salesforce/apex/CertifiedStudentList.getCertifiedStudents';
 import deleteStudentCertification from '@salesforce/apex/CertifiedStudentList.deleteStudentCertification';
 import { refreshApex } from '@salesforce/apex';
+import Utils from 'c/utils';
 
 export default class CertifiedStudentList extends LightningElement {
 
@@ -65,14 +66,16 @@ export default class CertifiedStudentList extends LightningElement {
         const btnClicked = event.target.getAttribute('data-btn-id');
         switch (btnClicked) {
             case 'btnEmail':
-            break;
+                this.notAvailable();
+                break;
             case 'btnSendCert':
-            break;
+                this.notAvailable();
+                break;
             case 'btnDelete':
             this.onDelete();
-            break;
+                break;
             default:
-            break;
+                break;
             }
         }
         onDelete() {
@@ -85,4 +88,7 @@ export default class CertifiedStudentList extends LightningElement {
                 this.error = error;
                 });
             }
+        notAvailable() {
+                Utils.showModal(this,'Not Available', 'This feature is currently unavailable');
+                }
 }

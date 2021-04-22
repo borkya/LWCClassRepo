@@ -16,4 +16,11 @@ export default class Utils {
             return getFieldDisplayValue(data, field) ? getFieldDisplayValue(data, field) : getFieldValue(data,
             field);
             }
+    static showModal = (firingComponent, header, content) => {
+        const evt = new CustomEvent('showmodal', {
+            bubbles:true,composed:true,
+            detail: {header,content }});
+            firingComponent.dispatchEvent(evt);
+                }
+
 }
