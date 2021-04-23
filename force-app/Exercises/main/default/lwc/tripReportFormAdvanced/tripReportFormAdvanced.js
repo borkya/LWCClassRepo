@@ -25,6 +25,7 @@ const fieldsToLoad = [FIELD_DATE, FIELD_INSTRUCTOR, FIELD_NAME, FIELD_RATING, FI
 export default class TripReportFormAdvanced extends LightningElement {
 	error;
 	_editorInitialized;
+	saveButtonDisabled = true;
 
 	@api recordId;
 
@@ -131,7 +132,7 @@ export default class TripReportFormAdvanced extends LightningElement {
 			createRecord(recordInput)
 				.then((tripReport) => {
 					//TODO #7: after record creation, store the new ID of the trip report in our recordId property
-                    this.recordId = tripReport.id;
+					this.recordId = tripReport.id;
 					Utils.showToast(this, "Success", "Trip Report Created", "success");
 				})
 				.catch((error) => {
@@ -142,7 +143,7 @@ export default class TripReportFormAdvanced extends LightningElement {
 		} else {
 			//TODO #8: when doing an update, add the recordId to our fieldsToSave object
 			//so that the system knows which record to update
-            fieldsToSave[FIELD_ID.fieldApiName] = this.recordId;
+			fieldsToSave[FIELD_ID.fieldApiName] = this.recordId;
 			const recordInput = { fields: fieldsToSave };
 			updateRecord(recordInput)
 				.then(() => {
@@ -154,5 +155,12 @@ export default class TripReportFormAdvanced extends LightningElement {
 					Utils.showToast(this, "Error updating record", errorBody, "error");
 				});
 		}
+	}
+	validateFields() {
+		let fields = Array.from(this.template.querySelectorAll(".validateMe"));
+		return fields.every((currentField) => currentField.checkValidity());
+	}
+	onBlur() {
+		this.saveButtonDisabled = !this.validateFields();
 	}
 }
