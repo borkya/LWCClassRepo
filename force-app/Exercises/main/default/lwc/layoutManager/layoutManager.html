@@ -1,5 +1,5 @@
 <template>
-	<span onshowmodal={handleShowModal}>
+	<span onshowmodal={handleShowModal} onloading={handleLoading} ondoneloading={handleDoneLoading}>
 	<c-modal header={modalHeader}>
 		{modalContent}
 		<div slot="footer">
@@ -7,6 +7,10 @@
 			</lightning-button>
 			</div>
 	</c-modal>
+	<template if:true={loading}>
+		<lightning-spinner alternative-text="Loading">
+		</lightning-spinner>
+		</template>
 	<lightning-layout horizontal-align="space" multiple-rows>
 
 		<lightning-layout-item padding="around-small" size="12" small-device-size="12" medium-device-size="3" large-device-size="2">
