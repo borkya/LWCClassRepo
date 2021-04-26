@@ -10,16 +10,38 @@ import SELECTED_STUDENT_CHANNEL from '@salesforce/messageChannel/SelectedStudent
 import { NavigationMixin } from 'lightning/navigation';
 import { encodeDefaultFieldValues } from 'lightning/pageReferenceUtils';
 import Utils from 'c/utils';
+import getClasses from "@salesforce/apex/StudentDetail.getClasses";
 const fields = [FIELD_Name, FIELD_Description, FIELD_Email,FIELD_Phone];
 
 export default class StudentDetail extends NavigationMixin(LightningElement) {
 	studentId ;
 	subscription;
+	courses =[];
+	error;
+	showEditForm = false;
 
 	@wire(getRecord, {recordId:'$studentId',fields:fields })
 	wiredStudent;
 	@wire(MessageContext) messageContext;	
 
+	
+    @wire(getClasses,{studentId : '$studentId'})
+	wired_getClasses({ error, data }) {
+        console.log('StudentId' + this.studentId);
+		this.courses =[];
+         if (data) {
+         //   this.courses.push({value: "",label: "Select a Class"});
+			data.forEach((course) => {this.courses.push({
+                value: course.Id,
+                label: course.Course_Delivery__r.Course__r.Name});
+				console.log('Course:: '+ (JSON.stringify(this.courses)));
+			});
+		this.showEditForm = true;
+		} else if (error) {
+			this.error = error;
+			console.log('Error, no Data :: '+ (JSON.stringify(error)));
+		} 
+    }
 	get name() {
 		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Name);
 	}

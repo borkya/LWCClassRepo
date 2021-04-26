@@ -26,11 +26,13 @@
     <lightning-card>
 		<lightning-tabset>
 			<lightning-tab label="History"> "The student has not registered for any courses." </lightning-tab>
-			<div class="slds-var-p-horizontal_x-small">
+			<template if:true={showEditForm}>
+            <div class="slds-var-p-horizontal_x-small">
             <lightning-tab label="Edit Notes"> 
                 <c-student-note-editor student-id ={studentId} ></c-student-note-editor>
             </lightning-tab>
             </div>
+        </template>
 		</lightning-tabset>
     </lightning-card>
 	</template>
