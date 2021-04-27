@@ -5,6 +5,7 @@ export default class StudentNoteEditor extends LightningElement {
     
     @api studentId;
     selectedClass;
+    @api courses;
 
     onClassChange(event){
         

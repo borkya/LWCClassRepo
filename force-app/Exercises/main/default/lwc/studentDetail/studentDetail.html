@@ -1,4 +1,5 @@
 <template>
+	
 	<!-- TODO #7: use the cardTitle getter to display a dynamic title for the lightning-card -->
 	<template if:true={wiredStudent.data}>
         <div class="slds-var-m-bottom_small">
@@ -26,10 +27,10 @@
     <lightning-card>
 		<lightning-tabset>
 			<lightning-tab label="History"> "The student has not registered for any courses." </lightning-tab>
-			<template if:true={showEditForm}>
+			<template if:true={courses.length}>
             <div class="slds-var-p-horizontal_x-small">
             <lightning-tab label="Edit Notes"> 
-                <c-student-note-editor student-id ={studentId} ></c-student-note-editor>
+                <c-student-note-editor student-id ={studentId} courses={courses}></c-student-note-editor>
             </lightning-tab>
             </div>
         </template>

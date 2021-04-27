@@ -1,4 +1,4 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire,track } from 'lwc';
 // import { getRecord, getFieldValue,getFieldDisplayValue } from 'lightning/uiRecordApi';
 import { getRecord } from 'lightning/uiRecordApi';
 import FIELD_Description from '@salesforce/schema/Contact.Description';
@@ -16,9 +16,8 @@ const fields = [FIELD_Name, FIELD_Description, FIELD_Email,FIELD_Phone];
 export default class StudentDetail extends NavigationMixin(LightningElement) {
 	studentId ;
 	subscription;
-	courses =[];
+	courses=[];
 	error;
-	showEditForm = false;
 
 	@wire(getRecord, {recordId:'$studentId',fields:fields })
 	wiredStudent;
@@ -28,19 +27,22 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
     @wire(getClasses,{studentId : '$studentId'})
 	wired_getClasses({ error, data }) {
         console.log('StudentId' + this.studentId);
-		this.courses =[];
+		
          if (data) {
-         //   this.courses.push({value: "",label: "Select a Class"});
+			this.courses =[];
 			data.forEach((course) => {this.courses.push({
                 value: course.Id,
                 label: course.Course_Delivery__r.Course__r.Name});
 				console.log('Course:: '+ (JSON.stringify(this.courses)));
 			});
-		this.showEditForm = true;
+	
 		} else if (error) {
 			this.error = error;
-			console.log('Error, no Data :: '+ (JSON.stringify(error)));
-		} 
+		
+		} else{
+			console.log('No Data, no courses');
+		}
+
     }
 	get name() {
 		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Name);
@@ -68,10 +70,10 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
 		return title;
 	}
 	
-/*	_getDisplayValue(data, field) {
+	getDisplayValue(data, field) {
 		return getFieldDisplayValue(data, field) ? getFieldDisplayValue(data, field) : getFieldValue(data, field);
 	}
-*/
+
 
 	connectedCallback() {
 		if(this.subscription){
@@ -85,7 +87,7 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
 			});
 		}
 	handleStudentChange(message) {
-			this.studentId = message.studentId;
+		this.studentId = message.studentId;
 			}
 	disconnectedCallback() {
 		unsubscribe(this.subscription);
