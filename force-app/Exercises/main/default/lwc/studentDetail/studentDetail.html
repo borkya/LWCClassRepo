@@ -26,11 +26,11 @@
     </div >
     <lightning-card>
 		<lightning-tabset>
-			<lightning-tab label="History"> "The student has not registered for any courses." </lightning-tab>
+			<lightning-tab label="History">{historyTabText}</lightning-tab>
 			<template if:true={courses.length}>
             <div class="slds-var-p-horizontal_x-small">
             <lightning-tab label="Edit Notes"> 
-                <c-student-note-editor student-id ={studentId} courses={courses}></c-student-note-editor>
+                <c-student-note-editor student-id ={studentId} courses={courses} course-id=courses.Id}></c-student-note-editor>
             </lightning-tab>
             </div>
         </template>

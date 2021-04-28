@@ -3,10 +3,10 @@
 		<lightning-combobox name="progress" value={selectedClass} placeholder="Select a Class" options={courses} onchange={onClassChange} variant="label-hidden">
 		</lightning-combobox>
 	<div class="slds-var-p-vertical_x-small">
-		<lightning-input-rich-text value={myVal}> </lightning-input-rich-text>
+		<lightning-input-rich-text value={instructions} data-field="notes"> </lightning-input-rich-text>
 	</div>
 	<lightning-button-group>
-		<lightning-button class="slds-var-m-top_small" type="submit" label="Save"></lightning-button>
+		<lightning-button class="slds-var-m-top_small" type="submit" label="Save" onclick={onSave} ></lightning-button>
 		<lightning-button class="slds-var-m-top_small" type="reset" label="Cancel"></lightning-button>
 	</lightning-button-group>
 </template>

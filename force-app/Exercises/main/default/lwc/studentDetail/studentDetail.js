@@ -18,7 +18,7 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
 	subscription;
 	courses=[];
 	error;
-
+	
 	@wire(getRecord, {recordId:'$studentId',fields:fields })
 	wiredStudent;
 	@wire(MessageContext) messageContext;	
@@ -32,7 +32,7 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
 			this.courses =[];
 			data.forEach((course) => {this.courses.push({
                 value: course.Id,
-                label: course.Course_Delivery__r.Course__r.Name});
+                label: course.Course_Delivery__r.Course__r.Name +' '+ course.Course_Delivery__r.Start_Date__c});
 				console.log('Course:: '+ (JSON.stringify(this.courses)));
 			});
 	
@@ -57,6 +57,15 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
 	}
     get email() {
 		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Email);
+	}
+	get historyTabText(){
+		let text;
+		if(this.courses.length){
+			text = "";
+		}else{
+			text= "The student has not registered for any courses";
+		}
+		return text;
 	}
 
 	//TODO #6: Review the cardTitle getter and the _getDisplayValue function below.
