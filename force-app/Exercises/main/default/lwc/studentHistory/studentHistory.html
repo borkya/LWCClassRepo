@@ -1,0 +1,8 @@
+<template>
+	<template for:each={courseHistory} for:item="course">
+		<lightning-tile label={course.label} type="media" key={course.Id}>
+			<lightning-icon slot="media" icon-name="standard:record"></lightning-icon>
+			<lightning-formatted-rich-text value={course.instructions}></lightning-formatted-rich-text>
+		</lightning-tile>
+	</template>
+</template>

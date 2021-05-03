@@ -1,40 +1,41 @@
 <template>
-	
 	<!-- TODO #7: use the cardTitle getter to display a dynamic title for the lightning-card -->
 	<template if:true={wiredStudent.data}>
-        <div class="slds-var-m-bottom_small">
-		<lightning-card title={cardTitle}>
-			<lightning-button variant="brand" label="Go To Record" slot="actions" onclick={handleOnClick}></lightning-button>
-			<template if:true={wiredStudent.error}>
-				<div class="slds-var-p-horizontal_medium">
-					<c-error-panel type="inlineMessage" errors={wiredStudent.error}></c-error-panel>
-				</div>
-			</template>
-			<template if:true={wiredStudent.data}>
-				<div class="slds-var-p-horizontal_medium">
-					<!-- this will be filled out during the lab -->
-					<lightning-card variant="narrow">
-						<lightning-formatted-email value={email}> </lightning-formatted-email>
-						<p>
-							<lightning-formatted-phone value={phone}> </lightning-formatted-phone>
-						</p>
-						<lightning-formatted-text value={description} linkify> </lightning-formatted-text>
-					</lightning-card>
-				</div>
-			</template>
+		<div class="slds-var-m-bottom_small">
+			<lightning-card title={cardTitle}>
+				<lightning-button variant="brand" label="Go To Record" slot="actions" onclick={handleOnClick}></lightning-button>
+				<template if:true={wiredStudent.error}>
+					<div class="slds-var-p-horizontal_medium">
+						<c-error-panel type="inlineMessage" errors={wiredStudent.error}></c-error-panel>
+					</div>
+				</template>
+				<template if:true={wiredStudent.data}>
+					<div class="slds-var-p-horizontal_medium">
+						<!-- this will be filled out during the lab -->
+						<lightning-card variant="narrow">
+							<lightning-formatted-email value={email}> </lightning-formatted-email>
+							<p>
+								<lightning-formatted-phone value={phone}> </lightning-formatted-phone>
+							</p>
+							<lightning-formatted-text value={description} linkify> </lightning-formatted-text>
+						</lightning-card>
+					</div>
+				</template>
+			</lightning-card>
+		</div>
+		<lightning-card>
+			<lightning-tabset>
+				<lightning-tab label="History">{historyTabText}
+					<c-student-history course-history={courses}></c-student-history>
+				</lightning-tab>
+				<template if:true={courses.length}>
+					<div class="slds-var-p-horizontal_x-small">
+						<lightning-tab label="Edit Notes">
+							<c-student-note-editor student-id={studentId} courses={courses} course-id="courses.Id}" onnotesupdated={handleNotesUpdate}></c-student-note-editor>
+						</lightning-tab>
+					</div>
+				</template>
+			</lightning-tabset>
 		</lightning-card>
-    </div >
-    <lightning-card>
-		<lightning-tabset>
-			<lightning-tab label="History">{historyTabText}</lightning-tab>
-			<template if:true={courses.length}>
-            <div class="slds-var-p-horizontal_x-small">
-            <lightning-tab label="Edit Notes"> 
-                <c-student-note-editor student-id ={studentId} courses={courses} course-id=courses.Id}></c-student-note-editor>
-            </lightning-tab>
-            </div>
-        </template>
-		</lightning-tabset>
-    </lightning-card>
 	</template>
 </template>
